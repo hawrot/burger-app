@@ -7,6 +7,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import a from "eslint-plugin-jsx-a11y/lib/util/implicitRoles/a";
 
 const INGREDIENTS_PRICES = {
     salad: 0.5,
@@ -18,16 +19,18 @@ const INGREDIENTS_PRICES = {
 class BurgerBuilder extends Component{
 
     state = {
-        ingredients: {
-            salad: 2,
-            bacon: 2,
-            cheese: 2,
-            meat: 2
-        },
+        ingredients: null,
         purchasable: false,
         totalPrice: 7,
         purchasing: false,
         loading: false
+    }
+
+    componentDidMount() {
+        axios.get('https://react-course-b97ad.firebaseio.com/ingredients.json')
+            .then(res =>{
+                this.setState({ingredients: res.data});
+            });
     }
 
     updatePurchaseState(ingredients){
