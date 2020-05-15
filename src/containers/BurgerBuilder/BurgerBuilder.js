@@ -7,8 +7,9 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import a from "eslint-plugin-jsx-a11y/lib/util/implicitRoles/a";
-import env from '../../environements/env';
+
+
+
 
 const INGREDIENTS_PRICES = {
     salad: 0.5,
@@ -19,6 +20,8 @@ const INGREDIENTS_PRICES = {
 
 class BurgerBuilder extends Component {
 
+
+
     state = {
         ingredients: null,
         purchasable: false,
@@ -28,10 +31,11 @@ class BurgerBuilder extends Component {
         error : false
     }
 
+
+
     componentDidMount() {
-        let ingredientLink = env.ing;
-        console.log(ingredientLink);
-        axios.get( 'https://react-course-b97ad.firebaseio.com/ingredients.json')
+        axios.get(process.env.REACT_APP_FIREBASE_INGREDIENTS)
+
             .then(res => {
                 this.setState({ingredients: res.data});
             }).catch(err =>{
@@ -111,6 +115,7 @@ class BurgerBuilder extends Component {
     }
 
     render() {
+
         const disabledInfo = {
             ...this.state.ingredients
         }
@@ -145,6 +150,7 @@ class BurgerBuilder extends Component {
         }
 
         return (
+
             <Aux>
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
                     {orderSummary}
