@@ -83,7 +83,7 @@ class Contact extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
-                value: '',
+                value: 'express',
                 validation: {},
                 valid: true
             }
