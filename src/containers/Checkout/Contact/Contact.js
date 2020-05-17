@@ -23,8 +23,8 @@ class Contact extends Component {
                     placeholder: 'Street'
                 },
                 value: ''
-            } ,
-            zipCode:{
+            },
+            zipCode: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
@@ -32,14 +32,14 @@ class Contact extends Component {
                 },
                 value: ''
             },
-            country:{
+            country: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
                     placeholder: 'Country'
                 },
                 value: ''
-            } ,
+            },
             email: {
                 elementType: 'input',
                 elementConfig: {
@@ -47,8 +47,8 @@ class Contact extends Component {
                     placeholder: 'Email Address'
                 },
                 value: ''
-            } ,
-            deliveryMethod:{
+            },
+            deliveryMethod: {
                 elementType: 'select',
                 elementConfig: {
                     options: [
@@ -61,7 +61,6 @@ class Contact extends Component {
         },
         loading: false
     }
-
 
 
     orderHandler = (event) => {
@@ -90,9 +89,20 @@ class Contact extends Component {
 
     }
 
+    inputChangedHandler = (event, inputIdentifier) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        }
+        const updatedFormElement = {...updatedOrderForm[inputIdentifier]};
+        updatedFormElement.value = event.target.value;
+        updatedOrderForm[inputIdentifier] = updatedFormElement;
+        this.setState({orderForm: updatedOrderForm});
+    };
+
+
     render() {
         const formElementsArray = [];
-        for(let key in this.state.orderForm){
+        for (let key in this.state.orderForm) {
             formElementsArray.push({
                 id: key,
                 config: this.state.orderForm[key]
@@ -100,12 +110,13 @@ class Contact extends Component {
         }
         let form = (
             <form action="">
-                {formElementsArray.map(formEl =>(
+                {formElementsArray.map(formEl => (
                     <Input
                         key={formEl.id}
                         elementType={formEl.config.elementType}
                         elementConfig={formEl.config.elementConfig}
                         value={formEl.config.value}
+                        changed={(event) => this.inputChangedHandler(event, formEl.id)}
                     />
                 ))}
                 <Button clicked={this.orderHandler} btnType="Success">Order</Button>
