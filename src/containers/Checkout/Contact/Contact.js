@@ -178,7 +178,7 @@ class Contact extends Component {
             form = <Spinner />;
         }
         return (
-            <div className={classes.ContactData}>
+            <div className={classes.Contact}>
                 <h4>Enter your Contact Data</h4>
                 {form}
             </div>
