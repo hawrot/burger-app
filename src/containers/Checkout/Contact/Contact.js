@@ -84,6 +84,7 @@ class Contact extends Component {
                     ]
                 },
                 value: '',
+                validation: {},
                 valid: true
             }
         },
