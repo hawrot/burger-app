@@ -34,13 +34,13 @@ class BurgerBuilder extends Component {
 
 
     componentDidMount() {
-        axios.get(process.env.REACT_APP_FIREBASE_INGREDIENTS)
+        /*axios.get(process.env.REACT_APP_FIREBASE_INGREDIENTS)
 
             .then(res => {
                 this.setState({ingredients: res.data});
             }).catch(err =>{
                 this.setState({error: true});
-        });
+        });*/
     }
 
     updatePurchaseState(ingredients) {
