@@ -7,8 +7,8 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-
-
+import {connect} from 'react-redux';
+import * as actionTypes from '../../store/actions';
 
 
 const INGREDIENTS_PRICES = {
@@ -21,16 +21,14 @@ const INGREDIENTS_PRICES = {
 class BurgerBuilder extends Component {
 
 
-
     state = {
         ingredients: null,
         purchasable: false,
         totalPrice: 7,
         purchasing: false,
         loading: false,
-        error : false
+        error: false
     }
-
 
 
     componentDidMount() {
@@ -113,10 +111,10 @@ class BurgerBuilder extends Component {
         for (let keu in disabledInfo) {
             disabledInfo[keu] = disabledInfo[keu] <= 1;
         }
-        let orderSummary =  null;
+        let orderSummary = null;
 
         let burger = this.state.error ? <p>Ingredients cant be loaded</p> : <Spinner/>;
-        if(this.state.ingredients){
+        if (this.state.ingredients) {
             burger = (
                 <Aux>
                     <Burger ingredients={this.state.ingredients}/>
@@ -151,5 +149,20 @@ class BurgerBuilder extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return
+    {
+        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENTS, ingredientName: ingName }),
+        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName })
+    }
+}
+
 
 export default withErrorHandler(BurgerBuilder, axios);
