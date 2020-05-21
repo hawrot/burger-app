@@ -18,7 +18,6 @@ class BurgerBuilder extends Component {
 
     state = {
         purchasable: false,
-        totalPrice: 7,
         purchasing: false,
         loading: false,
         error: false
@@ -85,7 +84,7 @@ class BurgerBuilder extends Component {
                     <BuildControls ingredientRemoved={ this.props.onIngredientRemoved}
                                    ingredientAdded={this.props.onIngredientAdded}
                                    disabled={disabledInfo}
-                                   price={this.state.totalPrice}
+                                   price={this.props.price}
                                    ordered={this.purchaseHandler}
                                    purchasable={this.state.purchasable}
                     />
