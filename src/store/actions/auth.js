@@ -8,7 +8,7 @@ export const authStart = () => {
 };
 export const authSuccess = (authData) => {
     return {
-        type:actionTypes.AUTH_FAIL,
+        type:actionTypes.AUTH_SUCCESS,
         authData: authData
     };
 };
