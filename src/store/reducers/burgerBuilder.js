@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from "../utility";
 
 const initialState = {
     ingredients: null,
@@ -16,35 +17,33 @@ const INGREDIENTS_PRICES = {
 const order = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENTS:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-                },
+            const updatedIngredient = {
+                [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+            }
+            const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
+            const updatedState = {
                 totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName]
-            };
+            }
+            return updateObject(state, updatedState);
         case actionTypes.REMOVE_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-                },
-                totalPrice: state.totalPrice - INGREDIENTS_PRICES[action.ingredientName]
-            };
+            const updatedIng = {
+                [action.ingredientName]: state.ingredients[action.ingredientName] - 1
+            }
+            const updatedIngs = updateObject(state.ingredients, updatedIng);
+            const updatedSt = {
+                totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName]
+            }
+            return updateObject(state, updatedSt);
         case actionTypes.SET_INGREDIENTS:
-            return {
-                ...state,
+            return updateObject(state, {
                 ingredients: action.ingredients,
                 error: false,
                 totalPrice: 7
-            }
+            });
         case actionTypes.FETCH_INGREDIENTS_FAILED:
-            return {
-                ...state,
+            return updateObject(state, {
                 error: true
-            }
+            })
         default:
             return state;
     }
