@@ -19,15 +19,21 @@ export const authFail = (error) => {
     };
 };
 
-export const auth = (email, password) =>{
+export const auth = (email, password, isSignup) =>{
     return dispatch =>{
         dispatch(authStart());
         const authData = {
             email: email,
             password: password,
             returnSecureToken: true
+        };
+
+        let url =  process.env.REACT_APP_API_KEY;
+        if(!isSignup){
+          url = process.env.REACT_APP_SIGN_IN;
         }
-        axios.post(process.env.REACT_APP_API_KEY, authData)
+
+        axios.post(url, authData)
             .then(res =>{
                 console.log(res);
                 dispatch(authSuccess(res));
