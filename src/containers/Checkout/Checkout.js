@@ -6,7 +6,7 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from './Contact/Contact';
 
 
-const checkout = () => {
+const checkout = props => {
 
    const checkoutCancelledHandler = () => {
         props.history.goBack();
