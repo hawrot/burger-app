@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Modal from '../../components/UI/Modal/Modal';
+import useHttpErrorHandler from '../../hooks/http-error-handler';
 
 import Aux from '../Aux';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return props => {
-
-
-
+       const [error, clearError] =  useHttpErrorHandler(axios);
 
         return (
             <Aux>
                 <Modal show={error}
-                       modalClosed={errorConfirmedhandler}
+                       modalClosed={clearError}
                 >
                     {error ? error.message : null}
                 </Modal>
