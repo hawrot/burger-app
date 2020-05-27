@@ -1,52 +1,50 @@
 import Aux from '../Aux';
-import React, {Component} from "react";
+import React, {useState} from "react";
 import classes from './Layout.css';
 import Toolbar from '../../components/navigation/toolbar/Toolbar';
 import SideDrawer from '../../components/navigation/SideDrawer/SideDrawer';
-import { connect} from 'react-redux';
+import {connect} from 'react-redux';
 
-class Layout extends Component {
+const layout = props => {
 
-    state ={
-        showSideDrawer: false
-    }
+    const [sideDrawerIsVisible, setSideDrawerIsVisible] = useState(false);
 
-    sideDrawerClosedHandler = () => {
-        this.setState({showSideDrawer: false})
+    const sideDrawerClosedHandler = () => {
+        setSideDrawerIsVisible(false);
     };
 
-    sideDrawerToggleHandler =() =>{
-        this.setState((prevState) =>{ return {showSideDrawer: !prevState.showSideDrawer}})
+    const sideDrawerToggleHandler = () => {
+        setSideDrawerIsVisible(!sideDrawerIsVisible);
     };
 
-    render(){
-        return(
-            <Aux>
-                <div>
-                    <Toolbar
-                        isAuth={this.props.isAuthenticated}
-                        drawerToogleClicked={this.sideDrawerToggleHandler}/>
-                    <SideDrawer
-                        isAuth={this.props.isAuthenticated}
-                        open={this.state.showSideDrawer}
-                        closed={this.sideDrawerClosedHandler}/>
-                </div>
-                <main className={classes.Content}>
-                    {this.props.children}
-                </main>
-            </Aux>
-        )
-    }
+
+    return (
+        <Aux>
+            <div>
+                <Toolbar
+                    isAuth={props.isAuthenticated}
+                    drawerToogleClicked={sideDrawerToggleHandler}/>
+                <SideDrawer
+                    isAuth={props.isAuthenticated}
+                    open={sideDrawerIsVisible}
+                    closed={sideDrawerClosedHandler}/>
+            </div>
+            <main className={classes.Content}>
+                {props.children}
+            </main>
+        </Aux>
+    )
+
 
 };
 
-const mapStateToProps = state =>{
-    return{
+const mapStateToProps = state => {
+    return {
         isAuthenticated: state.auth.token !== null
     }
 }
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps)(layout);
 
 
 
