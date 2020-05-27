@@ -6,9 +6,9 @@ import Button from '../../components/UI/Button/Button';
 import classes from './Auth.css';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {updateObject} from "../../shared/utility";
-import { checkValidity} from "../../shared/validation";
+import {checkValidity} from "../../shared/validation";
 
 const auth = props => {
     const [authForm, setAuthForm] = useState({
@@ -43,11 +43,13 @@ const auth = props => {
     });
     const [isSignup, setIsSignup] = useState(true);
 
+    const {buildingBurger, authRedirectPath, onSetAuthRedirectPath} = props;
+
     useEffect(() => {
-        if (!props.buildingBurger && props.authRedirectPath !== '/') {
-            props.onSetAuthRedirectPath();
+        if (!buildingBurger && authRedirectPath !== '/') {
+            onSetAuthRedirectPath();
         }
-    }, []);
+    }, [buildingBurger, authRedirectPath, onSetAuthRedirectPath]);
 
     const inputChangedHandler = (event, controlName) => {
         const updatedControls = updateObject(authForm, {
@@ -94,7 +96,7 @@ const auth = props => {
     ));
 
     if (props.loading) {
-        form = <Spinner />;
+        form = <Spinner/>;
     }
 
     let errorMessage = null;
@@ -105,7 +107,7 @@ const auth = props => {
 
     let authRedirect = null;
     if (props.isAuthenticated) {
-        authRedirect = <Redirect to={props.authRedirectPath} />;
+        authRedirect = <Redirect to={props.authRedirectPath}/>;
     }
 
     return (
